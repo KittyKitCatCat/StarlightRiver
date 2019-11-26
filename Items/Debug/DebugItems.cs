@@ -183,7 +183,7 @@ namespace StarlightRiver.Items.Debug
             item.rare = 1;
             item.createTile = ModContent.TileType<Tiles.Vitric.VitricOre>();
         }
-        public override string Texture => "StarlightRiver/MarioCumming";
+        public override string Texture => "StarlightRiver/TheresNoBlackInARainbow";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Potion of Debugging");

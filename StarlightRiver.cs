@@ -153,46 +153,95 @@ namespace StarlightRiver
             IL.Terraria.Lighting.PreRenderPhase += VitricLighting;
         }
 
+        private delegate void ModLightingStateDelegate(float from, ref float to);
+        private delegate void ModColorDelegate(int i, int j, ref float r, ref float g, ref float b);
+
         private void VitricLighting(ILContext il)
         {
             // Create our cursor at the start of the void PreRenderPhase() method.
             ILCursor c = new ILCursor(il);
 
-            // Find where 0.55F is loaded, then the Terraria.Main::GlobalTime field is loaded.
-            // Around IL_0727
-            c.GotoNext(i => i.MatchLdcR4(0.55f) && 
-                       i.Next.MatchLdsfld<float>("Terraria.Main::GlobalTime"));
+            // We insert our emissions right before the ModifyLight call (line 1963, CIL 0x3428)
+            // Get the TileLoader.ModifyLight method. Then, using it,
+            // find where it's called and place the cursor right before that call instruction.
+
+            MethodInfo ModifyLight = typeof(TileLoader).GetMethod("ModifyLight", BindingFlags.Public | BindingFlags.Static);
+            c.GotoNext(i => i.MatchCall(ModifyLight));
 
             // Emit the values of I and J.
-            c.Emit<int>(OpCodes.Ldloc_S, "n");
-            c.Emit<int>(OpCodes.Ldloc_S, "num17");
+            /* To emit local variables, you have to know the indeces of where those variables are stored.
+             * These are stated at the very top of the method, in a format like below:
+             * .locals init ( 
+             *      [0] = float32 FstName, 
+             *      [1] = ScdName, 
+             *      [2] = ThdName
+             * )
+            */
+
+            c.Emit(OpCodes.Ldloc, 27); // [27] = n
+            c.Emit(OpCodes.Ldloc, 29); // [29] = num17
 
             /* Emit the addresses of R, G, and B.
-             * It's important to emit their *addresses*, because we're passing them
-             *   by reference, not by value. Under the hood, "ref" tokens
-             *   pass a pointer to the object (even for managed types), 
+             * It's important to emit their *addresses*, because we're passing them—
+             *   by reference, not by value. Under the hood, "ref" tokens—
+             *   pass a pointer to the object (even for managed types),
              *   and that's what we need to do here.
             */
-            c.Emit<float>(OpCodes.Ldloca_S, "num18");
-            c.Emit<float>(OpCodes.Ldloca_S, "num19");
-            c.Emit<float>(OpCodes.Ldloca_S, "num20");
+            c.Emit(OpCodes.Ldloca, 32); // [32] = num18
+            c.Emit(OpCodes.Ldloca, 33); // [33] = num19
+            c.Emit(OpCodes.Ldloca, 34); // [34] = num20
 
             // Consume the values of I,J and the addresses of R,G,B by calling EmitVitricDel.
             c.EmitDelegate<ModColorDelegate>(EmitVitricDel);
+
+            #region DEPRECATED
+            //// This following code is hacky just because I dislike writing "if"s in IL :)
+            //EmitLightingState3("r2", 32); // [32] = num18 (R)
+            //EmitLightingState3("g2", 33); // [33] = num19 (G)
+            //EmitLightingState3("b2", 34); // [34] = num20 (B)
+
+            //void EmitLightingState3(string fieldname, int colorIndex)
+            //{
+            //    // Find the field info of Lighting.LightingState's r2/g2/b2 fields.
+            //    Type LightingState = typeof(Lighting).GetNestedType("LightingState", BindingFlags.NonPublic);
+            //    FieldInfo field = LightingState.GetField(fieldname, BindingFlags.Public | BindingFlags.Instance);
+
+            //    // Emit R, B, and G from before
+            //    c.Emit(OpCodes.Ldloc, colorIndex);
+
+            //    // Emit LightingState, then its r2/g2/b2 address.
+            //    c.Emit(OpCodes.Ldloc, 30); // [30] = lightingState3
+            //    c.Emit(OpCodes.Ldflda, field);
+            //    c.EmitDelegate<ModLightingStateDelegate>(EmitLightingStateDel);
+            //}
+            #endregion
 
             // Not much more than that.
             // EmitVitricDel has the actual logic inside of it.
         }
 
-        private delegate void ModColorDelegate(int i, int j, ref float r, ref float g, ref float b);
+        private static void EmitLightingStateDel(float from, ref float to)
+        {
+            // If the lighting at this position is less than the set R/G/B value, set it.
+            if (to < from)
+                to = from;
+        }
+
         private static void EmitVitricDel(int i, int j, ref float r, ref float g, ref float b)
         {
-            // If the tile is in the vitric biome, change its color.
-            if (LegendWorld.VitricBiome.Contains(i, j))
+            if (Main.tile[i, j] == null)
             {
-                r = 0;
-                g = 0;
-                b = 0;
+                return;
+            }
+            // If the tile is in the vitric biome and doesn't block light, emit light.
+            bool tileBlock = Main.tile[i, j].active() && Main.tileBlockLight[Main.tile[i, j].type];
+            bool wallBlock = Main.wallLight[Main.tile[i, j].wall];
+            if (LegendWorld.VitricBiome.Contains(i, j) && Main.tile[i, j] != null && !tileBlock && wallBlock)
+            {
+                // Change these as you please!
+                r = .1f;
+                g = .5f;
+                b = .7f;
             }
         }
 
@@ -554,7 +603,19 @@ namespace StarlightRiver
                 Smash = null;
                 Purify = null;
             }
-        }
 
+            // Cursed Accessory Control Override
+            On.Terraria.UI.ItemSlot.LeftClick_ItemArray_int_int -= NoClickCurse;
+            On.Terraria.UI.ItemSlot.Draw_SpriteBatch_ItemArray_int_int_Vector2_Color -= DrawSpecial;
+            On.Terraria.UI.ItemSlot.RightClick_ItemArray_int_int -= NoSwapCurse;
+            // Character Slot Addons
+            On.Terraria.GameContent.UI.Elements.UICharacterListItem.DrawSelf -= DrawSpecialCharacter;
+            // Link mode healthbar
+            On.Terraria.Main.DrawInterface_Resources_Life -= LinkModeHealth;
+            // Vitric background
+            On.Terraria.Main.DrawBackgroundBlackFill -= DrawVitricBackground;
+            // Vitric lighting
+            // IL.Terraria.Lighting.PreRenderPhase -= VitricLighting;
+        }
     }
 }	
