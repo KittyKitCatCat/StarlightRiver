@@ -16,6 +16,7 @@ using On.Terraria.GameContent.UI.Elements;
 using System;
 using Terraria.GameContent.UI.Elements;
 using System.Reflection;
+using StarlightRiver.Worlds;
 using UICharacter = Terraria.GameContent.UI.Elements.UICharacter;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
@@ -238,10 +239,9 @@ namespace StarlightRiver
             bool wallBlock = Main.wallLight[Main.tile[i, j].wall];
             if (LegendWorld.VitricBiome.Contains(i, j) && Main.tile[i, j] != null && !tileBlock && wallBlock)
             {
-                // Change these as you please!
-                r = .1f;
+                r = .3f;
                 g = .5f;
-                b = .7f;
+                b = .55f;
             }
         }
 

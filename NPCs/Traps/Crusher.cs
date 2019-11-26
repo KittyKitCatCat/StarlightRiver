@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
+using StarlightRiver.Players;
 
 namespace StarlightRiver.NPCs.Traps
 {

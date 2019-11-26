@@ -28,10 +28,16 @@ namespace StarlightRiver.Items.Vitric
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             Vector2 aim = Vector2.Normalize(Main.MouseWorld - player.Center);
-            Vector2 offset = aim.RotatedBy(Math.PI / 2) * 8f;
-            Projectile.NewProjectile(player.Center + aim * 0.25f + offset, aim * 8, type, damage, knockBack, player.whoAmI);
-            Projectile.NewProjectile(player.Center + aim * 0.25f - offset, aim * 8, type, damage, knockBack, player.whoAmI);
-            return false;
+
+            int proj = Projectile.NewProjectile(player.Center, (aim * 8.5f).RotatedBy(0.1f), type, damage, knockBack, player.whoAmI);
+            Main.projectile[proj].scale = 0.5f;
+            Main.projectile[proj].damage /= 2;
+            Main.projectile[proj].noDropItem = true;
+            int proj2 = Projectile.NewProjectile(player.Center, (aim * 8.5f).RotatedBy(-0.1f), type, damage, knockBack, player.whoAmI);
+            Main.projectile[proj2].scale = 0.5f;
+            Main.projectile[proj2].damage /= 2;
+            Main.projectile[proj2].noDropItem = true;
+            return true;
         }
         public override void SetStaticDefaults()
         {

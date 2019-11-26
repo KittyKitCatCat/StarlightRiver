@@ -1,3 +1,4 @@
+using StarlightRiver.Players;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,5 +17,7 @@ namespace StarlightRiver.Buffs
 		{
 			player.GetModPlayer<StarlightPlayer>().DarkSlow = true;
 		}
+
+        
 	}
 }

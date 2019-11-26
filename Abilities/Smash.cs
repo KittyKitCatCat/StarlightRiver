@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using StarlightRiver.Players;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

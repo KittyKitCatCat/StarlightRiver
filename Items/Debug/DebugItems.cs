@@ -158,7 +158,7 @@ namespace StarlightRiver.Items.Debug
             item.useTime = 10;
             item.useStyle = 1;
             item.consumable = true;
-            item.createTile = ModContent.TileType<Tiles.Vitric.VitricRock>();
+            item.createTile = ModContent.TileType<Tiles.StarJuice.Tank>();
         }
 
         public override bool UseItem(Player player)

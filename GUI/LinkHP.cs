@@ -8,6 +8,7 @@ using System;
 using Terraria.ID;
 using System.Linq;
 using StarlightRiver.Abilities;
+using StarlightRiver.Worlds;
 
 namespace StarlightRiver.GUI
 {

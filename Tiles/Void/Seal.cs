@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StarlightRiver.Abilities;
 using System;
 using System.Linq;
+using StarlightRiver.Players;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
