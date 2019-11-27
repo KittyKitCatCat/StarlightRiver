@@ -221,12 +221,12 @@ namespace StarlightRiver
             // EmitVitricDel has the actual logic inside of it.
         }
 
-        private static void EmitLightingStateDel(float from, ref float to)
-        {
-            // If the lighting at this position is less than the set R/G/B value, set it.
-            if (to < from)
-                to = from;
-        }
+        //private static void EmitLightingStateDel(float from, ref float to)
+        //{
+        //    // If the lighting at this position is less than the set R/G/B value, set it.
+        //    if (to < from)
+        //        to = from;
+        //}
 
         private static void EmitVitricDel(int i, int j, ref float r, ref float g, ref float b)
         {
