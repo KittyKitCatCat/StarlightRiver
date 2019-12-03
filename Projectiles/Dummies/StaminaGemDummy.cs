@@ -40,7 +40,7 @@ namespace StarlightRiver.Projectiles.Dummies
                 if (projectile.Hitbox.Intersects(player.Hitbox) && mp.StatStamina < mp.StatStaminaMax && mp.Abilities.Any(a => a.Active) && projectile.localAI[0] == 0)
                 {
                     mp.StatStamina++;
-                    if (mp.wisp.Active) { mp.wisp.Timer = 60 * mp.StatStamina - 1; }
+                    if (mp.AbilityWisp.Active) { mp.AbilityWisp.Timer = 60 * mp.StatStamina - 1; }
                     projectile.localAI[0] = 300;
 
                     Main.PlaySound(SoundID.Shatter, projectile.Center);

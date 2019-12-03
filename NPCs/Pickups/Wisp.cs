@@ -36,9 +36,9 @@ namespace StarlightRiver.NPCs.Pickups
             Player player = Main.player[npc.target];
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
 
-            if (npc.Hitbox.Intersects(player.Hitbox) && mp.wisp.Locked)
+            if (npc.Hitbox.Intersects(player.Hitbox) && mp.AbilityWisp.Locked)
             {
-                mp.wisp.Locked = false;
+                mp.AbilityWisp.Locked = false;
                 mp.StatStaminaMaxPerm += 1;
                 animate = 300;
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Pickups/get"));
@@ -65,7 +65,7 @@ namespace StarlightRiver.NPCs.Pickups
                     player.AddBuff(BuffID.Featherfall, 120);
                     Achievements.Achievements.QuickGive("Faerie Blaze", player);
 
-                    StarlightRiver.Instance.abilitytext.Display(mp.wisp, "Faeflame", "Hold " + StarlightRiver.Wisp.GetAssignedKeys()[0] + " to shrink and fly through the air");
+                    StarlightRiver.Instance.abilitytext.Display(mp.AbilityWisp, "Faeflame", "Hold " + StarlightRiver.Wisp.GetAssignedKeys()[0] + " to shrink and fly through the air");
                     Helper.UnlockEntry<FaeEntry>(player);
                 }
 
@@ -98,7 +98,7 @@ namespace StarlightRiver.NPCs.Pickups
                 timer = 0;
             }
 
-            if (mp.wisp.Locked)
+            if (mp.AbilityWisp.Locked)
             {
                 spriteBatch.Draw(wind, npc.position - Main.screenPosition + new Vector2(0, (float)Math.Sin(timer) * 4), Color.White);
                 Dust.NewDust(npc.position + new Vector2(0, (float)Math.Sin(timer) * 16), npc.width, npc.height, mod.DustType("Gold2"), 0, 0, 0, default, 0.5f);
@@ -107,7 +107,7 @@ namespace StarlightRiver.NPCs.Pickups
         public override void DrawEffects(ref Color drawColor)
         {
             AbilityHandler mp = Main.LocalPlayer.GetModPlayer<AbilityHandler>();
-            if (mp.wisp.Locked)
+            if (mp.AbilityWisp.Locked)
             {
                 Dust.NewDustPerfect(npc.Center + new Vector2((float)Math.Cos(timer), (float)Math.Sin(timer)) * 32, ModContent.DustType<Dusts.Gold>(),null,0,default,0.4f);
                 Dust.NewDustPerfect(npc.Center + new Vector2((float)Math.Cos(timer + 3) / 2, (float)Math.Sin(timer + 3)) * 32, ModContent.DustType<Dusts.Gold>(), null, 0, default, 0.4f);

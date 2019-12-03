@@ -128,11 +128,11 @@ namespace StarlightRiver.GUI
                 select = 0;
             }
 
-            if (!mp.dash.Locked) { wind.SetImage(ModContent.GetTexture("StarlightRiver/NPCs/Pickups/Wind1")); } else { wind.SetImage(ModContent.GetTexture("StarlightRiver/GUI/blank")); }
-            if (!mp.wisp.Locked) { wisp.SetImage(ModContent.GetTexture("StarlightRiver/NPCs/Pickups/Wisp1")); } else { wisp.SetImage(ModContent.GetTexture("StarlightRiver/GUI/blank")); }
-            if (!mp.pure.Locked) { pure.SetImage(ModContent.GetTexture("StarlightRiver/NPCs/Pickups/Purity1")); } else { pure.SetImage(ModContent.GetTexture("StarlightRiver/GUI/blank")); }
-            if (!mp.smash.Locked) { smash.SetImage(ModContent.GetTexture("StarlightRiver/NPCs/Pickups/Smash1")); } else { smash.SetImage(ModContent.GetTexture("StarlightRiver/GUI/blank")); }
-            if (!mp.sdash.Locked) { shadow.SetImage(ModContent.GetTexture("StarlightRiver/NPCs/Pickups/Cloak1")); } else { shadow.SetImage(ModContent.GetTexture("StarlightRiver/GUI/blank")); }
+            if (!mp.AbilityDash.Locked) { wind.SetImage(ModContent.GetTexture("StarlightRiver/NPCs/Pickups/Wind1")); } else { wind.SetImage(ModContent.GetTexture("StarlightRiver/GUI/blank")); }
+            if (!mp.AbilityWisp.Locked) { wisp.SetImage(ModContent.GetTexture("StarlightRiver/NPCs/Pickups/Wisp1")); } else { wisp.SetImage(ModContent.GetTexture("StarlightRiver/GUI/blank")); }
+            if (!mp.AbilityPure.Locked) { pure.SetImage(ModContent.GetTexture("StarlightRiver/NPCs/Pickups/Purity1")); } else { pure.SetImage(ModContent.GetTexture("StarlightRiver/GUI/blank")); }
+            if (!mp.AbilitySmash.Locked) { smash.SetImage(ModContent.GetTexture("StarlightRiver/NPCs/Pickups/Smash1")); } else { smash.SetImage(ModContent.GetTexture("StarlightRiver/GUI/blank")); }
+            if (!mp.AbilityShadowDash.Locked) { shadow.SetImage(ModContent.GetTexture("StarlightRiver/NPCs/Pickups/Cloak1")); } else { shadow.SetImage(ModContent.GetTexture("StarlightRiver/GUI/blank")); }
 
             switch (select)
             {
@@ -186,11 +186,11 @@ namespace StarlightRiver.GUI
         {
             Player player = Main.LocalPlayer;
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
-            if (listeningElement == wind && !mp.dash.Locked) { select = 1; }
-            if (listeningElement == wisp && !mp.wisp.Locked) { select = 2; }
-            if (listeningElement == pure && !mp.pure.Locked) { select = 3; }
-            if (listeningElement == smash && !mp.smash.Locked) { select = 4; }
-            if (listeningElement == shadow && !mp.sdash.Locked) { select = 5; }
+            if (listeningElement == wind && !mp.AbilityDash.Locked) { select = 1; }
+            if (listeningElement == wisp && !mp.AbilityWisp.Locked) { select = 2; }
+            if (listeningElement == pure && !mp.AbilityPure.Locked) { select = 3; }
+            if (listeningElement == smash && !mp.AbilitySmash.Locked) { select = 4; }
+            if (listeningElement == shadow && !mp.AbilityShadowDash.Locked) { select = 5; }
         }
     }
 

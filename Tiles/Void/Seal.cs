@@ -40,11 +40,11 @@ namespace StarlightRiver.Tiles.Void
                 foreach (Player player in Main.player)
                 {
                     if (Collision.CheckAABBvAABBCollision(player.position, player.Size, new Vector2(i * 16, j * 16 - 45), new Vector2(368, 64)) && 
-                        player.GetModPlayer<AbilityHandler>().smash.Active && !LegendWorld.SealOpen)
+                        player.GetModPlayer<AbilityHandler>().AbilitySmash.Active && !LegendWorld.SealOpen)
                     {
                         LegendWorld.SealOpen = true;
-                        player.GetModPlayer<AbilityHandler>().smash.OnExit();
-                        player.GetModPlayer<AbilityHandler>().smash.Active = false;
+                        player.GetModPlayer<AbilityHandler>().AbilitySmash.OnExit();
+                        player.GetModPlayer<AbilityHandler>().AbilitySmash.Active = false;
                         player.GetModPlayer<StarlightPlayer>().Shake = 80;
 
                         Main.PlaySound(SoundID.NPCDeath59);

@@ -32,7 +32,7 @@ namespace StarlightRiver.Projectiles.Dummies
 
                 if (AbilityHelper.CheckDash(player, projectile.Hitbox))
                 {
-                    mp.dash.Active = false;
+                    mp.AbilityDash.Active = false;
 
                     if (player.velocity.Length() != 0)
                     {

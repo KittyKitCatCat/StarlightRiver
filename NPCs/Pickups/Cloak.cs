@@ -34,9 +34,9 @@ namespace StarlightRiver.NPCs.Pickups
             Player player = Main.player[npc.target];
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
 
-            if (npc.Hitbox.Intersects(player.Hitbox) && mp.sdash.Locked)
+            if (npc.Hitbox.Intersects(player.Hitbox) && mp.AbilityShadowDash.Locked)
             {
-                mp.sdash.Locked = false;
+                mp.AbilityShadowDash.Locked = false;
                 mp.StatStaminaMaxPerm += 1;
                 animate = 300;
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Pickups/get"));
@@ -63,7 +63,7 @@ namespace StarlightRiver.NPCs.Pickups
                 if (animate == 1)
                 {
                     player.AddBuff(BuffID.Featherfall, 120);
-                    StarlightRiver.Instance.abilitytext.Display(mp.sdash, "Zzelera's Cloak", "Press " + StarlightRiver.Superdash.GetAssignedKeys()[0] + " to become invincible and fly to your mouse");
+                    StarlightRiver.Instance.abilitytext.Display(mp.AbilityShadowDash, "Zzelera's Cloak", "Press " + StarlightRiver.Superdash.GetAssignedKeys()[0] + " to become invincible and fly to your mouse");
                 }
             }
 
@@ -87,7 +87,7 @@ namespace StarlightRiver.NPCs.Pickups
                 timer = 0;
             }
 
-            if (mp.sdash.Locked)
+            if (mp.AbilityShadowDash.Locked)
             {
                 spriteBatch.Draw(wind, npc.position - Main.screenPosition + new Vector2(0, (float)Math.Sin(timer) * 4), Color.White);
                 Dust.NewDust(npc.position + new Vector2(0, (float)Math.Sin(timer) * 4), npc.width, npc.height, ModContent.DustType<Dusts.Darkness>(), 0, 0, 0, default, 0.5f);

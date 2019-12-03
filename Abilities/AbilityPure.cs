@@ -14,10 +14,10 @@ using Terraria.ModLoader;
 namespace StarlightRiver.Abilities
 {
     [DataContract]
-    public class Pure : Ability
+    public class AbilityPure : Ability
     {
         
-        public Pure(Player player) : base(4, player)
+        public AbilityPure(Player player) : base(4, player)
         {
 
         }

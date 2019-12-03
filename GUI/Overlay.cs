@@ -33,7 +33,7 @@ namespace StarlightRiver.GUI
             {
                 if (state == 1)
                 {
-                    if (!Main.LocalPlayer.GetModPlayer<AbilityHandler>().pure.Locked)
+                    if (!Main.LocalPlayer.GetModPlayer<AbilityHandler>().AbilityPure.Locked)
                     {
                         for (int k = 0; k <= Main.screenWidth; k++)
                         {

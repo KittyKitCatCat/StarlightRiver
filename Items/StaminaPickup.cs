@@ -19,7 +19,7 @@ namespace StarlightRiver.Items
         {
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
             mp.StatStamina++;
-            if (mp.wisp.Active) { mp.wisp.Timer = 60 * mp.StatStamina - 1; }
+            if (mp.AbilityWisp.Active) { mp.AbilityWisp.Timer = 60 * mp.StatStamina - 1; }
 
             for (int k = 0; k <= 20; k++)
             {

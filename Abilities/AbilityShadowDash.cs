@@ -13,13 +13,13 @@ using Terraria.ModLoader;
 namespace StarlightRiver.Abilities
 {
     [DataContract]
-    public class Superdash : Ability
+    public class AbilityShadowDash : Ability
     {
         
         [DataMember] float timer = 0;
         [DataMember] Vector2 objective;
         [DataMember] Vector2 start;
-        public Superdash(Player player) : base(3, player)
+        public AbilityShadowDash(Player player) : base(3, player)
         {
 
         }

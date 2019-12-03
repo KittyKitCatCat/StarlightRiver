@@ -36,9 +36,9 @@ namespace StarlightRiver.NPCs.Pickups
             Player player = Main.player[npc.target];
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
 
-            if (npc.Hitbox.Intersects(player.Hitbox) && mp.dash.Locked)
+            if (npc.Hitbox.Intersects(player.Hitbox) && mp.AbilityDash.Locked)
             {
-                mp.dash.Locked = false;
+                mp.AbilityDash.Locked = false;
                 mp.StatStaminaMaxPerm += 1;
                 animate = 300;
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Pickups/get"));
@@ -61,7 +61,7 @@ namespace StarlightRiver.NPCs.Pickups
                     player.AddBuff(BuffID.Featherfall, 120);
                     Achievements.Achievements.QuickGive("Stormcaller", player);
 
-                    StarlightRiver.Instance.abilitytext.Display(mp.dash, "Forbidden Winds", "Press " + StarlightRiver.Dash.GetAssignedKeys()[0] + " + A/W/S/D to dash");
+                    StarlightRiver.Instance.abilitytext.Display(mp.AbilityDash, "Forbidden Winds", "Press " + StarlightRiver.Dash.GetAssignedKeys()[0] + " + A/W/S/D to dash");
                     Helper.UnlockEntry<WindsEntry>(player);
                 }
             }
@@ -83,7 +83,7 @@ namespace StarlightRiver.NPCs.Pickups
                 timer = 0;
             }
 
-            if (mp.dash.Locked)
+            if (mp.AbilityDash.Locked)
             {
                 Vector2 pos = npc.position - Main.screenPosition - (new Vector2((int)((Math.Cos(timer * 3) + 1) * 4f), (int)((Math.Sin(timer * 3) + 1) * 4f)) / 2) + new Vector2(0, (float)Math.Sin(timer) * 4);
 

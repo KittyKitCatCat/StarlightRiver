@@ -36,9 +36,9 @@ namespace StarlightRiver.NPCs.Pickups
             Player player = Main.player[npc.target];
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
 
-            if (npc.Hitbox.Intersects(player.Hitbox) && mp.smash.Locked)
+            if (npc.Hitbox.Intersects(player.Hitbox) && mp.AbilitySmash.Locked)
             {
-                mp.smash.Locked = false;
+                mp.AbilitySmash.Locked = false;
                 mp.StatStaminaMaxPerm += 1;
                 animate = 300;
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Pickups/get"));
@@ -60,7 +60,7 @@ namespace StarlightRiver.NPCs.Pickups
                     player.AddBuff(BuffID.Featherfall, 120);
                     Achievements.Achievements.QuickGive("Shatterer", player);
 
-                    StarlightRiver.Instance.abilitytext.Display(mp.smash, "Gaia's Fist", "Press " + StarlightRiver.Smash.GetAssignedKeys()[0] + " in the air to dive downwards");
+                    StarlightRiver.Instance.abilitytext.Display(mp.AbilitySmash, "Gaia's Fist", "Press " + StarlightRiver.Smash.GetAssignedKeys()[0] + " in the air to dive downwards");
                 }
             }
 
@@ -81,7 +81,7 @@ namespace StarlightRiver.NPCs.Pickups
                 timer = 0;
             }
 
-            if (mp.smash.Locked)
+            if (mp.AbilitySmash.Locked)
             {
                 Vector2 pos = npc.position - Main.screenPosition - (new Vector2((int)((Math.Cos(timer * 3) + 1) * 4f), (int)((Math.Sin(timer * 3) + 1) * 4f)) / 2) + new Vector2(0, (float)Math.Sin(timer) * 4);
 

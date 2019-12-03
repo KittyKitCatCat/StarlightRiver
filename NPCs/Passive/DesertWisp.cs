@@ -51,7 +51,7 @@ namespace StarlightRiver.NPCs.Passive
                 npc.localAI[2] -= 3.5f;
                 return;
             }
-            if ((distance.Length() <= range && !(mp.wisp.Active)) || Main.dayTime)
+            if ((distance.Length() <= range && !(mp.AbilityWisp.Active)) || Main.dayTime)
             {
                 fleeing = true;
             }
@@ -110,7 +110,7 @@ namespace StarlightRiver.NPCs.Passive
                 npc.localAI[2] -= 3.5f;
                 return;
             }
-            if (distance.Length() <= range && !(mp.wisp.Active))
+            if (distance.Length() <= range && !(mp.AbilityWisp.Active))
             {
                 fleeing = true;
             }

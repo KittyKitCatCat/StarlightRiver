@@ -73,7 +73,7 @@ namespace StarlightRiver.GUI
         {
             Texture2D tex = Main.inventoryBackTexture;
             AbilityHandler mp = Main.LocalPlayer.GetModPlayer<AbilityHandler>();
-            Equipped = (TargetSlot == 0) ? mp.slot1 : mp.slot2;
+            Equipped = (TargetSlot == 0) ? mp.Slot1 : mp.Slot2;
 
             //Draws the slot
             spriteBatch.Draw(tex, GetDimensions().ToRectangle(), new Rectangle(0, 0, (int)tex.Size().X, (int)tex.Size().Y), Color.White * 0.75f);
@@ -101,8 +101,8 @@ namespace StarlightRiver.GUI
 
         public void SetSlot(Player player, Item item, int slot)
         {
-            if (slot == 0) { player.GetModPlayer<AbilityHandler>().slot1 = item; }
-            else { player.GetModPlayer<AbilityHandler>().slot2 = item; }
+            if (slot == 0) { player.GetModPlayer<AbilityHandler>().Slot1 = item; }
+            else { player.GetModPlayer<AbilityHandler>().Slot2 = item; }
         }
 
         public override void Click(UIMouseEvent evt)

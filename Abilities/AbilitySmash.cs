@@ -14,10 +14,10 @@ using Terraria.ModLoader;
 namespace StarlightRiver.Abilities
 {
     [DataContract]
-    public class Smash : Ability
+    public class AbilitySmash : Ability
     {
         
-        public Smash(Player player) : base(2, player) // stamina cost
+        public AbilitySmash(Player player) : base(2, player) // stamina cost
         {
 
         }

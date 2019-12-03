@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using StarlightRiver.Abilities;
 using StarlightRiver.GUI;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WebmilioCommons.Extensions;
@@ -26,6 +29,15 @@ namespace StarlightRiver.Players
         public static StarlightPlayer Get() => Get(Main.LocalPlayer);
         public static StarlightPlayer Get(Player player) => player.GetModPlayer<StarlightPlayer>();
 
+        public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            ProcessTriggersAbilities(triggersSet);
+        }
+
+        public override void ModifyDrawLayers(List<PlayerLayer> layers)
+        {
+            ModifyDrawLayersAbilities(layers);
+        }
 
         public override void ModifyScreenPosition()
         {

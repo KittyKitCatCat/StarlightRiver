@@ -272,8 +272,8 @@ namespace StarlightRiver.NPCs.Boss
             if (AbilityHelper.CheckDash(player, npc.Hitbox))
             {
                 player.velocity *= -1.25f;
-                mp.dash.Active = false;
-                mp.dash.OnExit();
+                mp.AbilityDash.Active = false;
+                mp.AbilityDash.OnExit();
                 Helper.Kill(npc);
 
                 for (int k = 0; k <= 20; k++)

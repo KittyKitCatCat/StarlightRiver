@@ -19,28 +19,28 @@ namespace StarlightRiver.Items.Infusions
         public override void UpdateEquip(Player player)
         {
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
-            if (!(mp.dash is DashAstral) && !(mp.dash is DashCombo))
+            if (!(mp.AbilityDash is AbilityDashAstral) && !(mp.AbilityDash is AbilityDashCombo))
             {
-                if (mp.dash is DashFlame) { mp.dash = new DashCombo(player); }
-                else { mp.dash = new DashAstral(player); }
-                mp.dash.Locked = false;
-                mp.dash.Cooldown = 90;
+                if (mp.AbilityDash is AbilityDashFlame) { mp.AbilityDash = new AbilityDashCombo(player); }
+                else { mp.AbilityDash = new AbilityDashAstral(player); }
+                mp.AbilityDash.Locked = false;
+                mp.AbilityDash.Cooldown = 90;
             }
         }
 
         public override bool CanEquipAccessory(Player player, int slot)
         {
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
-            return !mp.dash.Locked;
+            return !mp.AbilityDash.Locked;
 
         }
 
         public override void Unequip(Player player)
         {
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
-            mp.dash = new Dash(player);
-            mp.dash.Locked = false;
-            mp.dash.Cooldown = 90;
+            mp.AbilityDash = new AbilityDash(player);
+            mp.AbilityDash.Locked = false;
+            mp.AbilityDash.Cooldown = 90;
         }
     }
 }

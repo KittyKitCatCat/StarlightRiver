@@ -13,7 +13,7 @@ namespace StarlightRiver.Abilities
     {
         public static bool CheckDash(Player player, Rectangle hitbox)
         {
-            if(Collision.CheckAABBvAABBCollision(player.Hitbox.TopLeft(), player.Hitbox.Size(), hitbox.TopLeft(), hitbox.Size()) && player.GetModPlayer<AbilityHandler>().dash.Active)
+            if(Collision.CheckAABBvAABBCollision(player.Hitbox.TopLeft(), player.Hitbox.Size(), hitbox.TopLeft(), hitbox.Size()) && player.GetModPlayer<AbilityHandler>().AbilityDash.Active)
             {
                 return true;
             }
@@ -22,7 +22,7 @@ namespace StarlightRiver.Abilities
 
         public static bool CheckWisp(Player player, Rectangle hitbox)
         {
-            if (Collision.CheckAABBvAABBCollision(player.Hitbox.TopLeft(), player.Hitbox.Size(), hitbox.TopLeft(), hitbox.Size()) && player.GetModPlayer<AbilityHandler>().wisp.Active)
+            if (Collision.CheckAABBvAABBCollision(player.Hitbox.TopLeft(), player.Hitbox.Size(), hitbox.TopLeft(), hitbox.Size()) && player.GetModPlayer<AbilityHandler>().AbilityWisp.Active)
             {
                 return true;
             }

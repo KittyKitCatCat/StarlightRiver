@@ -27,7 +27,7 @@ namespace StarlightRiver.Tiles.Interactive
         {
             Player player = Main.LocalPlayer;
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
-            if (mp.sdash.Active)
+            if (mp.AbilityShadowDash.Active)
             {
                 Main.tile[i, j].inActive(true);
             }

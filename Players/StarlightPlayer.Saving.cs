@@ -14,6 +14,7 @@ namespace StarlightRiver.Players
             TagCompound tag = new TagCompound();
 
             SaveStamina(tag);
+            SaveAbilities(tag);
 
             return tag;
         }
@@ -21,6 +22,7 @@ namespace StarlightRiver.Players
         public override void Load(TagCompound tag)
         {
             LoadStamina(tag);
+            LoadAbilities(tag);
         }
     }
 }

@@ -19,17 +19,17 @@ namespace StarlightRiver.Items.Infusions
         public override void UpdateEquip(Player player)
         {
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
-            if (!(mp.wisp is WispHoming) && !(mp.wisp is WispCombo))
+            if (!(mp.AbilityWisp is AbilityWispHoming) && !(mp.AbilityWisp is AbilityWispCombo))
             {
-                if (mp.wisp is WispWIP)
+                if (mp.AbilityWisp is AbilityWispWip)
                 {
-                    mp.wisp = new WispCombo(player);
-                    mp.wisp.Locked = false;
+                    mp.AbilityWisp = new AbilityWispCombo(player);
+                    mp.AbilityWisp.Locked = false;
                 }
                 else
                 {
-                    mp.wisp = new WispHoming(player);
-                    mp.wisp.Locked = false;
+                    mp.AbilityWisp = new AbilityWispHoming(player);
+                    mp.AbilityWisp.Locked = false;
                 }
             }
         }
@@ -37,13 +37,13 @@ namespace StarlightRiver.Items.Infusions
         public override bool CanEquipAccessory(Player player, int slot)
         {
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
-            return !mp.wisp.Locked;
+            return !mp.AbilityWisp.Locked;
         }
 
         public override void Unequip(Player player)
         {
-            player.GetModPlayer<AbilityHandler>().wisp = new Abilities.Wisp(player);
-            player.GetModPlayer<AbilityHandler>().wisp.Locked = false;
+            player.GetModPlayer<AbilityHandler>().AbilityWisp = new Abilities.AbilityWisp(player);
+            player.GetModPlayer<AbilityHandler>().AbilityWisp.Locked = false;
         }
     }
 }

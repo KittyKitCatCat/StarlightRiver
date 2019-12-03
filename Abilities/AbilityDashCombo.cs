@@ -13,11 +13,11 @@ using Terraria.ModLoader;
 namespace StarlightRiver.Abilities
 {
     [DataContract]
-    public class DashCombo : DashAstral
+    public class AbilityDashCombo : AbilityDashAstral
     {
         
 
-        public DashCombo(Player player) : base(player)
+        public AbilityDashCombo(Player player) : base(player)
         {
 
         }

@@ -13,12 +13,12 @@ using Terraria.ModLoader;
 namespace StarlightRiver.Abilities
 {
     [DataContract]
-    public class Dash : Ability
+    public class AbilityDash : Ability
     {
         [DataMember] protected float X = 0;
         [DataMember] protected float Y = 0;
 
-        public Dash(Player player) : base(1, player)
+        public AbilityDash(Player player) : base(1, player)
         {
 
         }

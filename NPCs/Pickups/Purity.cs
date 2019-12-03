@@ -36,14 +36,14 @@ namespace StarlightRiver.NPCs.Pickups
             Player player = Main.player[npc.target];
             AbilityHandler mp = player.GetModPlayer<AbilityHandler>();
 
-            if (npc.Hitbox.Intersects(player.Hitbox) && mp.pure.Locked && animate == 0)
+            if (npc.Hitbox.Intersects(player.Hitbox) && mp.AbilityPure.Locked && animate == 0)
             {               
                 animate = 500;
             }
 
             if (animate == 100)
             {
-                mp.pure.Locked = false;
+                mp.AbilityPure.Locked = false;
                 mp.StatStaminaMaxPerm += 1;
                 for (float k = 3.48f; k >= -0.4f; k -= 0.1f)
                 {
@@ -73,7 +73,7 @@ namespace StarlightRiver.NPCs.Pickups
                 if (animate == 1)
                 {
                     player.AddBuff(BuffID.Featherfall, 120);
-                    StarlightRiver.Instance.abilitytext.Display(mp.pure, "Coronoa of Purity", "Press " + StarlightRiver.Purify.GetAssignedKeys()[0] + " to purify nearby tiles");
+                    StarlightRiver.Instance.abilitytext.Display(mp.AbilityPure, "Coronoa of Purity", "Press " + StarlightRiver.Purify.GetAssignedKeys()[0] + " to purify nearby tiles");
                     Helper.UnlockEntry<PureEntry>(player);
                 }
             }
@@ -132,7 +132,7 @@ namespace StarlightRiver.NPCs.Pickups
                 timer = 0;
             }
 
-            if (mp.pure.Locked && animate == 0)
+            if (mp.AbilityPure.Locked && animate == 0)
             {
                 spriteBatch.Draw(wind, npc.position - Main.screenPosition + new Vector2(0, (float)Math.Sin(timer) * 4), Color.White);
                 Dust.NewDust(npc.position + new Vector2(0, (float)Math.Sin(timer) * 16), npc.width, npc.height, ModContent.DustType<Dusts.Purify>());

@@ -13,14 +13,7 @@ namespace StarlightRiver.Abilities
 {
     public partial class AbilityHandler : ModPlayer
     {
-        //All players store 1 instance of each ability. This instance is changed to the infusion variant if an infusion is equipped.
-        public Dash dash = new Dash(Main.LocalPlayer);
-        public Wisp wisp = new Wisp(Main.LocalPlayer);
-        public Pure pure = new Pure(Main.LocalPlayer);
-        public Smash smash = new Smash(Main.LocalPlayer);
-        public Superdash sdash = new Superdash(Main.LocalPlayer);
-
-        //A list of all ability instances is kept to easily check things globally across the player's abilities.
+        // A list of all ability instances is kept to easily check things globally across the player's abilities.
         public List<Ability> Abilities = new List<Ability>();
 
         //Holds the player's wing or rocket boot timer, since they must be disabled to move upwards correctly.
@@ -30,16 +23,16 @@ namespace StarlightRiver.Abilities
         {
             return new TagCompound
             {
-                //ability unlock data
-                [nameof(dash)] = dash.Locked,
-                [nameof(wisp)] = wisp.Locked,
-                [nameof(pure)] = pure.Locked,
-                [nameof(smash)] = smash.Locked,
-                [nameof(sdash)] = sdash.Locked,
+                // Ability Unlock Data
+                [nameof(AbilityDash)] = AbilityDash.Locked,
+                [nameof(AbilityWisp)] = AbilityWisp.Locked,
+                [nameof(AbilityPure)] = AbilityPure.Locked,
+                [nameof(AbilitySmash)] = AbilitySmash.Locked,
+                [nameof(AbilityShadowDash)] = AbilityShadowDash.Locked,
 
-                //infusion data
-                [nameof(slot1)] = slot1,
-                [nameof(slot2)] = slot2,
+                // Infusion Data
+                [nameof(Slot1)] = Slot1,
+                [nameof(Slot2)] = Slot2,
 
                 [nameof(HasSecondSlot)] = HasSecondSlot
             };
@@ -47,43 +40,54 @@ namespace StarlightRiver.Abilities
 
         public override void Load(TagCompound tag)
         {
-            //dash
-            dash = new Dash(player);
-            dash.Locked = tag.GetBool(nameof(dash));
-            Abilities.Add(dash);
-            //wisp
-            wisp = new Wisp(player);
-            wisp.Locked = tag.GetBool(nameof(wisp));
-            Abilities.Add(wisp);
-            //pure
-            pure = new Pure(player);
-            pure.Locked = tag.GetBool(nameof(pure));
-            Abilities.Add(pure);
-            //smash
-            smash = new Smash(player);
-            smash.Locked = tag.GetBool(nameof(smash));
-            Abilities.Add(smash);
-            //shadow dash
-            sdash = new Superdash(player);
-            sdash.Locked = tag.GetBool(nameof(sdash));
-            Abilities.Add(sdash);
+            // Dash
+            AbilityDash = new AbilityDash(player);
+            AbilityDash.Locked = tag.GetBool(nameof(AbilityDash));
+            Abilities.Add(AbilityDash);
+
+            // Wisp
+            AbilityWisp = new AbilityWisp(player);
+            AbilityWisp.Locked = tag.GetBool(nameof(AbilityWisp));
+            Abilities.Add(AbilityWisp);
+
+            // Pure
+            AbilityPure = new AbilityPure(player);
+            AbilityPure.Locked = tag.GetBool(nameof(AbilityPure));
+            Abilities.Add(AbilityPure);
+
+            // Smash
+            AbilitySmash = new AbilitySmash(player);
+            AbilitySmash.Locked = tag.GetBool(nameof(AbilitySmash));
+            Abilities.Add(AbilitySmash);
+
+            // Shadow Dash
+            AbilityShadowDash = new AbilityShadowDash(player);
+            AbilityShadowDash.Locked = tag.GetBool(nameof(AbilityShadowDash));
+            Abilities.Add(AbilityShadowDash);
 
 
-            //loads infusion data.
-            slot1 = tag.Get<Item>(nameof(slot1)); if (slot1.Name == "") { slot1 = null; }
-            slot2 = tag.Get<Item>(nameof(slot2)); if (slot2.Name == "") { slot2 = null; }
+            // Loads Infusion Data
+            Slot1 = tag.Get<Item>(nameof(Slot1)); 
+
+            if (string.IsNullOrWhiteSpace(Slot1.Name)) 
+                Slot1 = null;
+
+            Slot2 = tag.Get<Item>(nameof(Slot2)); 
+            if (string.IsNullOrWhiteSpace(Slot2.Name))
+                Slot2 = null;
+
             HasSecondSlot = tag.GetBool(nameof(HasSecondSlot));
         }
 
-        //Updates the Ability list with the latest info
+        // Updates the Ability list with the latest info
         public void SetList()
         {
             Abilities.Clear();
-            Abilities.Add(dash);
-            Abilities.Add(wisp);
-            Abilities.Add(pure);
-            Abilities.Add(smash);
-            Abilities.Add(sdash);
+            Abilities.Add(AbilityDash);
+            Abilities.Add(AbilityWisp);
+            Abilities.Add(AbilityPure);
+            Abilities.Add(AbilitySmash);
+            Abilities.Add(AbilityShadowDash);
         }
 
         public override void ResetEffects()
@@ -100,12 +104,7 @@ namespace StarlightRiver.Abilities
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
-            //Activates one of the player's abilities on the appropriate keystroke.
-            if (StarlightRiver.Dash.JustPressed) { dash.StartAbility(this); }
-            if (StarlightRiver.Wisp.JustPressed) { wisp.StartAbility(this); }
-            if (StarlightRiver.Purify.JustPressed) { pure.StartAbility(this); }
-            if (StarlightRiver.Smash.JustPressed) { smash.StartAbility(this); }
-            if (StarlightRiver.Superdash.JustPressed) { sdash.StartAbility(this); }
+            
         }
 
         public override void PreUpdate()
@@ -170,12 +169,5 @@ namespace StarlightRiver.Abilities
 
         }
 
-        public override void ModifyDrawLayers(List<PlayerLayer> layers)
-        {
-            if(wisp.Active || sdash.Active)
-            {
-                foreach (PlayerLayer layer in layers) { layer.visible = false; }
-            }
-        }
     }
 }

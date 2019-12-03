@@ -12,11 +12,11 @@ using Terraria.ModLoader;
 namespace StarlightRiver.Abilities
 {
     [DataContract]
-    public class DashFlame : Dash
+    public class AbilityDashFlame : AbilityDash
     {
         
 
-        public DashFlame(Player player) : base(player)
+        public AbilityDashFlame(Player player) : base(player)
         {
 
         }
