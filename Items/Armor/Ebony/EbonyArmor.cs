@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+using StarlightRiver.Projectiles.WeaponProjectiles.Summons;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace StarlightRiver.Items.Armor.Ebony
@@ -62,6 +58,7 @@ namespace StarlightRiver.Items.Armor.Ebony
         {
             player.setBonus = "summon tagged enemies release bolts of dark energy at a random nearby enemy when taking summon damage for 20% of the hits damage";
             EbonyPlayer ebonyPlayer = player.GetModPlayer<EbonyPlayer>();
+            player.maxMinions++;
             ebonyPlayer.HasEbonyArmor = true;
         }
     }
@@ -86,14 +83,23 @@ namespace StarlightRiver.Items.Armor.Ebony
                         {
                             if (Helper.IsTargetValid(Main.npc[k]))
                             {
-                                if (Vector2.Distance(Main.npc[k].Center, proj.Center) <= 400)
+                                if (Main.npc[k] != target)
                                 {
-                                    closeNPCs.Add(Main.npc[k]);
+                                    if (Vector2.Distance(Main.npc[k].Center, proj.Center) <= 100)
+                                    {
+                                        if (Collision.CanHitLine(proj.Center, 2, 2, Main.npc[k].Center, 2, 2))
+                                        {
+                                            closeNPCs.Add(Main.npc[k]);
+                                        }
+                                    }
                                 }
                             }
                         }
                         Helper.RandomizeList(closeNPCs);
-
+                        if (closeNPCs[0].IsTargetValid())
+                        {
+                            Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<EbonyPrismProjectile>(), proj.damage / 5, proj.knockBack / 5, proj.owner, closeNPCs[0].whoAmI);
+                        }
                     }
                 }
             }

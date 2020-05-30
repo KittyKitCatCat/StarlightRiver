@@ -15,7 +15,7 @@ namespace StarlightRiver.Items.EbonyIvory
         }
         public override void SetDefaults()
         {
-            item.mana = 10;
+            item.mana = 6;
             item.damage = 8;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.width = 26;
