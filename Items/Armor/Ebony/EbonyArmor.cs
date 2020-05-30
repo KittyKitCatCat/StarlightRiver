@@ -62,10 +62,43 @@ namespace StarlightRiver.Items.Armor.Ebony
         {
             player.setBonus = "summon tagged enemies release bolts of dark energy at a random nearby enemy when taking summon damage for 20% of the hits damage";
             EbonyPlayer ebonyPlayer = player.GetModPlayer<EbonyPlayer>();
+            ebonyPlayer.HasEbonyArmor = true;
         }
     }
     public class EbonyPlayer : ModPlayer
     {
+        public bool HasEbonyArmor = false;
+        public override void ResetEffects()
+        {
+            HasEbonyArmor = false;
+            base.ResetEffects();
+        }
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        {
+            if (HasEbonyArmor)
+            {
+                if (proj.minion)
+                {
+                    if (target == proj.OwnerMinionAttackTargetNPC)
+                    {
+                        List<NPC> closeNPCs = new List<NPC>();
+                        for (int k = 0; k < Main.npc.Length; k++)
+                        {
+                            if (Helper.IsTargetValid(Main.npc[k]))
+                            {
+                                if (Vector2.Distance(Main.npc[k].Center, proj.Center) <= 400)
+                                {
+                                    closeNPCs.Add(Main.npc[k]);
+                                }
+                            }
+                        }
+                        Helper.RandomizeList(closeNPCs);
+
+                    }
+                }
+            }
+            base.OnHitNPCWithProj(proj, target, damage, knockback, crit);
+        }
     }
     [AutoloadEquip(EquipType.Legs)]
     public class EbonyLegs : ModItem
