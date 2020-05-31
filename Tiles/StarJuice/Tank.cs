@@ -72,7 +72,7 @@ namespace StarlightRiver.Tiles.StarJuice
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Additive);
 
-                spriteBatch.Draw(ModContent.GetTexture("StarlightRiver/RiftCrafting/Glow0"), pos + Vector2.One * -16, new Color(80, 150, 200) * (entity.charge / 5000f * 0.7f));
+                spriteBatch.Draw(ModContent.GetTexture("StarlightRiver/VFX/Glow0"), pos + Vector2.One * -16, new Color(80, 150, 200) * (entity.charge / 5000f * 0.7f));
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);

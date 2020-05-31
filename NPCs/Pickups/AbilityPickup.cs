@@ -107,7 +107,7 @@ namespace StarlightRiver.NPCs.Pickups
         {
             if (Visible)
             {
-                Texture2D tex = ModContent.GetTexture("StarlightRiver/RiftCrafting/Glow0");
+                Texture2D tex = ModContent.GetTexture("StarlightRiver/VFX/Glow0");
                 Vector2 pos = npc.Center - Main.screenPosition + new Vector2(0, (float)Math.Sin(LegendWorld.rottime) * 5);
 
                 spriteBatch.End();

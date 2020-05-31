@@ -15,25 +15,6 @@ namespace StarlightRiver.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shadowflame");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 30;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
-        }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
-        {
-            for (int k = 0; k < projectile.oldPos.Length; k++)
-            {
-                Texture2D texture = ModContent.GetTexture("StarlightRiver/VFX/Trail1");
-                float progress = (float)(projectile.oldPos.Length - k) / projectile.oldPos.Length;
-                float scale = projectile.scale * progress;
-                Color color = Color.Purple * (progress);
-                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + projectile.Size / 2 + new Vector2(0f, projectile.gfxOffY);
-                spriteBatch.End();
-                spriteBatch.Begin(default, BlendState.Additive);
-                spriteBatch.Draw(texture, drawPos, null, color, projectile.oldRot[k], projectile.Size / 2, scale, SpriteEffects.None, 0f);
-                spriteBatch.End();
-                spriteBatch.Begin();
-            }
-            return false;
         }
         public override void SetDefaults()
         {
@@ -43,9 +24,10 @@ namespace StarlightRiver.Projectiles
             projectile.aiStyle = -1;
             projectile.ranged = true;
             projectile.aiStyle = -1;
+            projectile.extraUpdates = 2;
             projectile.penetrate = -1;
-            projectile.timeLeft = 60;
-            projectile.tileCollide = false;
+            projectile.timeLeft = 30;
+            projectile.tileCollide = true;
             projectile.ignoreWater = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -84,7 +66,7 @@ namespace StarlightRiver.Projectiles
             projectile.height = projectile.width;
             projectile.position.X = projectile.Center.X - (projectile.width / 2);
             projectile.position.Y = projectile.Center.Y - (projectile.height / 2);
-            /*if (projectile.scale > 0.9)
+            if (projectile.scale > 0.9)
             {
                 projectile.scale -= 0.01f;
             }
@@ -103,7 +85,7 @@ namespace StarlightRiver.Projectiles
                 dust.velocity *= 0.1f;
                 dust.velocity -= projectile.velocity * (1.3f - projectile.scale);
                 dust.scale += projectile.scale * 1.25f;
-            }*/
+            }
         }
     }
 }

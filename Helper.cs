@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using StarlightRiver.Codex;
+using StarlightRiver.Projectiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,35 @@ namespace StarlightRiver
 {
     public static class Helper
     {
+        public static void MakeGlow(this Projectile projectile, Vector2 position, Texture2D texture, Color color, float time, float size, bool additive)
+        {
+            new GlowProjectile(position, time, size, color, texture, additive);
+        }
+        public static void DrawTrail(this Projectile projectile, SpriteBatch spriteBatch, Texture2D texture, Color color, bool additive, float scaleMultiplier)
+        {
+            for (int k = 0; k < projectile.oldPos.Length; k++)
+            {
+                float progress = (float)(projectile.oldPos.Length - k) / projectile.oldPos.Length;
+                float scale = projectile.scale * progress * scaleMultiplier;
+                Color newCoolor = color * (progress);
+                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + projectile.Size / 2 + new Vector2(0f, projectile.gfxOffY);
+                if (additive)
+                {
+                    spriteBatch.End();
+                    spriteBatch.Begin(default, BlendState.Additive);
+                }
+                spriteBatch.Draw(texture, drawPos, null, newCoolor, projectile.oldRot[k], texture.Size() / 2, scale, SpriteEffects.None, 0f);
+                if (additive)
+                {
+                    spriteBatch.End();
+                    spriteBatch.Begin();
+                }
+            }
+        }
         /// <summary>
         /// Kills the NPC.
         /// </summary>
         /// <param name="npc"></param>
-
         public static Vector2 TileAdj { get => Lighting.lightMode > 1 ? Vector2.Zero : Vector2.One * 12; }
         public static void Kill(this NPC npc)
         {

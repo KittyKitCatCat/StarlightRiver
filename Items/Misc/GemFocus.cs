@@ -46,7 +46,7 @@ namespace StarlightRiver.Items.Misc
         {
             Texture2D over = ModContent.GetTexture("StarlightRiver/Items/Misc/GemFocusOver");
             Texture2D under = ModContent.GetTexture("StarlightRiver/Items/Misc/GemFocusUnder");
-            Texture2D glow = ModContent.GetTexture("StarlightRiver/RiftCrafting/Glow0");
+            Texture2D glow = ModContent.GetTexture("StarlightRiver/FVX/Glow0");
 
             spriteBatch.Draw(under, position + frame.Size() / 2 * scale, under.Frame(), Color.White, 0, under.Size() / 2, scale, 0, 0);
 
@@ -69,7 +69,7 @@ namespace StarlightRiver.Items.Misc
         {
             Texture2D over = ModContent.GetTexture("StarlightRiver/Items/Misc/GemFocusOver");
             Texture2D under = ModContent.GetTexture("StarlightRiver/Items/Misc/GemFocusUnder");
-            Texture2D glow = ModContent.GetTexture("StarlightRiver/RiftCrafting/Glow0");
+            Texture2D glow = ModContent.GetTexture("StarlightRiver/VFX/Glow0");
 
             Vector2 position = item.position - Main.screenPosition;
             Rectangle frame = item.Hitbox;

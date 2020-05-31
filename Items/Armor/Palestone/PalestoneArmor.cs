@@ -137,7 +137,7 @@ namespace StarlightRiver.Items.Armor.Palestone
 
                 float posX = player.Center.X + (float)(Math.Cos(rot) * dist);
                 float posY = player.Center.Y + (float)(Math.Sin(rot) * dist) / 2;
-                return new Vector2(posX, posY);
+                return new Vector2(posX, posY) + Main.screenPosition;
             }
             void DrawGlowmasks(PlayerDrawInfo info, bool back)
             {

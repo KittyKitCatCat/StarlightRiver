@@ -610,7 +610,7 @@ namespace StarlightRiver
                     spriteBatch.End();
                     spriteBatch.Begin(default, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
 
-                    Texture2D tex = ModContent.GetTexture("StarlightRiver/Keys/Glow");
+                    Texture2D tex = ModContent.GetTexture("StarlightRiver/VFX/Glow0");
 
                     // Update + draw dusts
                     foreach (BootlegDust dust in WindowDust)

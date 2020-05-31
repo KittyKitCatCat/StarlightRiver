@@ -79,7 +79,7 @@ namespace StarlightRiver.Projectiles.WeaponProjectiles
         {
             Texture2D over = ModContent.GetTexture("StarlightRiver/Items/Misc/GemFocusOver");
             Texture2D under = ModContent.GetTexture("StarlightRiver/Items/Misc/GemFocusUnder");
-            Texture2D glow = ModContent.GetTexture("StarlightRiver/RiftCrafting/Glow0");
+            Texture2D glow = ModContent.GetTexture("StarlightRiver/VFX/Glow0");
 
             Vector2 position = projectile.position - Main.screenPosition;
             float scale = projectile.scale;

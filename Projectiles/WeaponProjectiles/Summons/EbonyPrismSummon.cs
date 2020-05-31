@@ -176,13 +176,13 @@ namespace StarlightRiver.Projectiles.WeaponProjectiles.Summons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ebony Prism");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 40;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
+            projectile.width = 38;
+            projectile.height = 38;
             projectile.friendly = true;
             projectile.aiStyle = -1;
             projectile.minion = true;
@@ -206,13 +206,8 @@ namespace StarlightRiver.Projectiles.WeaponProjectiles.Summons
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            for (int k = 0; k < projectile.oldPos.Length; k++)
-            {
-                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + projectile.Size / 2 + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k * 6) / projectile.oldPos.Length);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.oldRot[k], projectile.Size / 2, projectile.scale - (k * 0.02f), SpriteEffects.None, 0f);
-            }
-            return false;
+            projectile.DrawTrail(spriteBatch, ModContent.GetTexture("StarlightRiver/VFX/Trail3"), Color.Red, true, 1.1f);
+            return true;
         }
         public override void Kill(int timeLeft)
         {

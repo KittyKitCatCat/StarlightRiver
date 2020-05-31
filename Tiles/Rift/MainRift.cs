@@ -257,8 +257,8 @@ namespace StarlightRiver.Tiles.Rift
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Additive);
 
-                Texture2D tex = ModContent.GetTexture("StarlightRiver/RiftCrafting/Glow0");
-                Texture2D tex2 = ModContent.GetTexture("StarlightRiver/RiftCrafting/Glow1");
+                Texture2D tex = ModContent.GetTexture("StarlightRiver/VFX/Glow0");
+                Texture2D tex2 = ModContent.GetTexture("StarlightRiver/VFX/Glow1");
                 Color color = new Color(220 + (int)(Math.Sin(LegendWorld.rottime * 3) * 25), 140, 255) * 0.5f;
                 float baseScale = item.Hitbox.Size().Length() / tex.Frame().Size().Length() * 3;
 
