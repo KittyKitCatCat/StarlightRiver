@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using StarlightRiver.Dusts;
 using System;
 using System.Xml.Serialization;
@@ -14,6 +15,25 @@ namespace StarlightRiver.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shadowflame");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 30;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            for (int k = 0; k < projectile.oldPos.Length; k++)
+            {
+                Texture2D texture = ModContent.GetTexture("StarlightRiver/VFX/Trail1");
+                float progress = (float)(projectile.oldPos.Length - k) / projectile.oldPos.Length;
+                float scale = projectile.scale * progress;
+                Color color = Color.Purple * (progress);
+                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + projectile.Size / 2 + new Vector2(0f, projectile.gfxOffY);
+                spriteBatch.End();
+                spriteBatch.Begin(default, BlendState.Additive);
+                spriteBatch.Draw(texture, drawPos, null, color, projectile.oldRot[k], projectile.Size / 2, scale, SpriteEffects.None, 0f);
+                spriteBatch.End();
+                spriteBatch.Begin();
+            }
+            return false;
         }
         public override void SetDefaults()
         {
@@ -24,8 +44,7 @@ namespace StarlightRiver.Projectiles
             projectile.ranged = true;
             projectile.aiStyle = -1;
             projectile.penetrate = -1;
-            projectile.extraUpdates = 2;
-            projectile.timeLeft = 180;
+            projectile.timeLeft = 60;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
         }
@@ -34,7 +53,7 @@ namespace StarlightRiver.Projectiles
             target.AddBuff(BuffID.ShadowFlame, 200);
         }
         float randomRotation = Main.rand.NextFloat(0.1f) - 0.05f;
-        float randomSpeed = 5f + Main.rand.NextFloat(6f);
+        float randomSpeed = Main.rand.NextFloat(8, 12);
 
         bool picked = false;
         NPC target = Main.npc[0];
@@ -57,13 +76,15 @@ namespace StarlightRiver.Projectiles
             if (Vector2.Distance(target.Center, projectile.Center) < 400)
             {
                 projectile.velocity += Vector2.Normalize(target.Center - projectile.Center) * 0.7f;
+                projectile.velocity = Vector2.Normalize(projectile.velocity) * randomSpeed;
             }
             projectile.velocity = Vector2.Normalize(projectile.velocity).RotatedBy(randomRotation) * randomSpeed;
+            projectile.rotation = projectile.velocity.ToRotation() + 1.57f;
             projectile.width = (int)(20f * projectile.scale);
             projectile.height = projectile.width;
             projectile.position.X = projectile.Center.X - (projectile.width / 2);
             projectile.position.Y = projectile.Center.Y - (projectile.height / 2);
-            if (projectile.scale > 0.9)
+            /*if (projectile.scale > 0.9)
             {
                 projectile.scale -= 0.01f;
             }
@@ -82,7 +103,7 @@ namespace StarlightRiver.Projectiles
                 dust.velocity *= 0.1f;
                 dust.velocity -= projectile.velocity * (1.3f - projectile.scale);
                 dust.scale += projectile.scale * 1.25f;
-            }
+            }*/
         }
     }
 }

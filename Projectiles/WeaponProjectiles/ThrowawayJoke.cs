@@ -16,6 +16,7 @@ namespace StarlightRiver.Projectiles.WeaponProjectiles
             projectile.height = 30;
             projectile.friendly = true;
             projectile.penetrate = 2;
+            projectile.aiStyle = -1;
             projectile.ranged = true;
             projectile.tileCollide = true;
             projectile.timeLeft = 120;

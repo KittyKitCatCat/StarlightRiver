@@ -23,7 +23,7 @@ namespace StarlightRiver.Projectiles.WeaponProjectiles
         }
         public void spawnShadowflame(int angle)
         {
-            Vector2 perturbedSpeed = new Vector2(projectile.velocity.X, projectile.velocity.Y).RotatedBy(MathHelper.ToRadians((angle + Main.rand.Next(40) - 20)));
+            Vector2 perturbedSpeed = Vector2.One.RotatedBy(MathHelper.ToRadians(angle + Main.rand.Next(20))) * Main.rand.NextFloat(8, 12);
             Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<ShadowflameTendril>(), projectile.damage / 2, projectile.knockBack / 2, projectile.owner);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

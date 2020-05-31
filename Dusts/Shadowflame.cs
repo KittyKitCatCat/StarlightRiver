@@ -17,7 +17,7 @@ namespace StarlightRiver.Dusts
         }
         public override Color? GetAlpha(Dust dust, Color lightColor)
         {
-            return Color.Purple * dust.fadeIn;
+            return Color.White * dust.fadeIn;
         }
         public override bool Update(Dust dust)
         {
