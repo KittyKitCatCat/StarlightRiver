@@ -78,28 +78,21 @@ namespace StarlightRiver.Items.Armor.Ebony
                 {
                     if (target == proj.OwnerMinionAttackTargetNPC)
                     {
-                        List<NPC> closeNPCs = new List<NPC>();
                         for (int k = 0; k < Main.npc.Length; k++)
                         {
-                            if (Helper.IsTargetValid(Main.npc[k]))
+                            if (Main.npc[k] != target)
                             {
-                                if (Main.npc[k] != target)
+                                if (Helper.IsTargetValid(Main.npc[k]))
                                 {
-                                    if (Vector2.Distance(Main.npc[k].Center, proj.Center) <= 100)
+                                    if (Vector2.Distance(Main.npc[k].Center, proj.Center) <= 124)
                                     {
-                                        if (Collision.CanHitLine(proj.Center, 2, 2, Main.npc[k].Center, 2, 2))
-                                        {
-                                            closeNPCs.Add(Main.npc[k]);
-                                        }
+                                        target.StrikeNPC(damage / 2, knockback / 2, proj.direction, crit);
                                     }
+
                                 }
                             }
                         }
-                        Helper.RandomizeList(closeNPCs);
-                        if (closeNPCs[0].IsTargetValid())
-                        {
-                            Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<EbonyPrismProjectile>(), proj.damage / 5, proj.knockBack / 5, proj.owner, closeNPCs[0].whoAmI);
-                        }
+                        proj.MakeGlow(target.Center, ModContent.GetTexture("StarlightRiver/VFX/Glow0"), Color.Red, 40, 2f, true);
                     }
                 }
             }
