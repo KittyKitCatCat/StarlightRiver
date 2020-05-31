@@ -43,14 +43,12 @@ namespace StarlightRiver.Items.EbonyIvory
                         {
                             if (Main.projectile[i].owner == player.whoAmI)
                             {
-
                                 Main.projectile[i].minionSlots += 1;
 
                                 if (Main.projectile[i].minionSlots < player.maxMinions)
                                 {
                                     Main.projectile[i].minionSlots += 1;
                                 }
-
                             }
                         }
                     }

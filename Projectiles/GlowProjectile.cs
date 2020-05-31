@@ -14,7 +14,7 @@ namespace StarlightRiver.Projectiles
             projectile.friendly = true;
             projectile.penetrate = -1;
             projectile.timeLeft = 2;
-            projectile.tileCollide = true;
+            projectile.tileCollide = false;
             projectile.ignoreWater = false;
         }
         float time;

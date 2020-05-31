@@ -168,7 +168,6 @@ namespace StarlightRiver.Projectiles.WeaponProjectiles.Summons
                 projectile.rotation = 0;
             }
             #endregion
-            Main.NewText(projectile.position);
         }
         #endregion
     }
@@ -214,7 +213,7 @@ namespace StarlightRiver.Projectiles.WeaponProjectiles.Summons
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            projectile.DrawTrail(spriteBatch, ModContent.GetTexture("StarlightRiver/VFX/Trail3"), Color.Red, true, 0.3f);
+            projectile.DrawTrail(spriteBatch, ModContent.GetTexture("StarlightRiver/VFX/Trail1"), Color.Red, true, 1.1f);
             return true;
         }
         public override void Kill(int timeLeft)
