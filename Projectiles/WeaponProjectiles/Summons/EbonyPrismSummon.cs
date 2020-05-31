@@ -83,8 +83,6 @@ namespace StarlightRiver.Projectiles.WeaponProjectiles.Summons
         int lastShot;
         public override void AI()
         {
-            //to-do 
-            //fix this stupid ass projectile ass looking ass randomly getting NAN position, caching pos and then setting p. pos to it if it has NANs in it donest seem to work
             projectile.timeLeft = 100;
             /*
              * AI slots:
@@ -126,8 +124,11 @@ namespace StarlightRiver.Projectiles.WeaponProjectiles.Summons
                     projectile.ai[1]++;
                     if (projectile.ai[1] >= 800)
                     {
-                        ChangeState(AIStates.Shooting);
-                        lastShot = 1;
+                        if (Vector2.Distance(target.Center, projectile.Center) <= 600)
+                        {
+                            ChangeState(AIStates.Shooting);
+                            lastShot = 1;
+                        }
                     }
                 }
                 if (projectile.ai[0] == (int)AIStates.Shooting)
@@ -190,7 +191,14 @@ namespace StarlightRiver.Projectiles.WeaponProjectiles.Summons
             projectile.extraUpdates = 1;
             projectile.penetrate = 1;
         }
-
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (target != Main.npc[(int)projectile.ai[0]])
+            {
+                return false;
+            }
+            return base.CanHitNPC(target);
+        }
         public override void AI()
         {
             if (Main.rand.Next(2) == 0)
