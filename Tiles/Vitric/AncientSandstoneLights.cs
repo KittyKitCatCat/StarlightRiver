@@ -34,8 +34,8 @@ namespace StarlightRiver.Tiles.Vitric
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Texture2D tex = ModContent.GetTexture("StarlightRiver/RiftCrafting/Glow0");
-            Texture2D tex2 = ModContent.GetTexture("StarlightRiver/RiftCrafting/Glow1");
+            Texture2D tex = ModContent.GetTexture("StarlightRiver/VFX/Glow0");
+            Texture2D tex2 = ModContent.GetTexture("StarlightRiver/VFX/Glow1");
 
             spriteBatch.End();
             spriteBatch.Begin(default, BlendState.Additive);

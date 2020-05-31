@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StarlightRiver.Dusts;
+using StarlightRiver.Gores;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -25,19 +27,19 @@ namespace StarlightRiver.Items.Ultrashark
         #endregion
 
         #region methods
-        public void SpawnCasing(Player player, Vector2 velocity) //pos infront of player pretty much
+        public void SpawnCasing(Player player, Vector2 velocity, Vector2 position) //pos infront of player pretty much
         {
-            Gore.NewGore(GetSharkPos(player), (-velocity + new Vector2(0, -1) + new Vector2(Main.rand.NextFloat(3f) - 1.5f, -2)) * 0.25f, mod.GetGoreSlot("Gores/UltrasharkCasing"));
+            Gore.NewGore(position, (-velocity + new Vector2(0, -1) + new Vector2(Main.rand.NextFloat(3f) - 1.5f, -2)) * 0.25f, mod.GetGoreSlot("Gores/UltrasharkCasing"));
         }
         public Vector2 GetSharkPos(Player player) //pos infront of player pretty much
         {
-            return player.Center + new Vector2(turretDirection * player.width, -10);
+            return player.Center + new Vector2(turretDirection * player.width, -7);
         }
         public Vector2 GetStandPos(Player player) //pos where we draw the stand
         {
-            return GetSharkPos(player) + new Vector2(0, 17);
+            return player.Center + new Vector2(turretDirection * player.width, 7);
         }
-        private static Vector2 GetMousePos() //player's mouse position
+        public Vector2 GetMousePos() //player's mouse position
         {
             return new Vector2(Main.mouseX + Main.screenPosition.X, Main.mouseY + Main.screenPosition.Y);
         }
@@ -52,11 +54,9 @@ namespace StarlightRiver.Items.Ultrashark
             }
             return sharkRotation;
         }
-#pragma warning disable IDE0060 // Remove unused parameter
-        public void CompleteSetup(Player player)
-#pragma warning restore IDE0060 // Remove unused parameter
+        public void completeSetup(Player player)
         {
-            //TODO: put some completion vfx here idk
+            //put some completion vfx here idk
             turretSetup = true;
         }
         #endregion
@@ -110,7 +110,7 @@ namespace StarlightRiver.Items.Ultrashark
         #region item
         public override void SetDefaults()
         {
-            item.useStyle = ItemUseStyleID.HoldingOut;
+            item.useStyle = 5;
             item.useAnimation = 24;
             item.useTime = 24;
             item.shootSpeed = 20f;
@@ -119,19 +119,19 @@ namespace StarlightRiver.Items.Ultrashark
             item.width = 64;
             item.height = 24;
             item.damage = 28;
-            item.rare = ItemRarityID.LightRed;
+            item.rare = 4;
             item.value = Item.sellPrice(0, 10, 0, 0);
             item.noMelee = true;
             item.autoReuse = true;
             item.useTurn = false;
             item.useAmmo = AmmoID.Bullet;
             item.ranged = true;
-            item.shoot = ProjectileID.PurificationPowder;
+            item.shoot = 10;
         }
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ultrashark");
-            Tooltip.SetDefault("'Overwhelming firepower' \nRight click to deploy a turret stand, drastically increasing accuracy and damage output \nUnable to move while the turret stand is deployed");
+            Tooltip.SetDefault("Okay so like it goes like pew... pew... pewpew... pewpew... pewpewpew... pewpewpewpew... pewpewpewpewpepwepwpewpepwpewepwepwpewpepwepwepwpewp\nAnd like, its innacurate\nBut like, you can right click it to like mount it and it like a turret\nWhile a turret exist you can like, shoot, way more accurately, faster, and spin up faster too damn");
         }
         public override bool AltFunctionUse(Player player)
         {
@@ -169,7 +169,7 @@ namespace StarlightRiver.Items.Ultrashark
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            if (spinup < (turretDeployed ? 4f : 3f)) //spinup
+            if (spinup < (turretDeployed ? 4f: 3f)) //spinup
             {
                 spinup += (turretDeployed ? 0.5f : 0.2f);
             }
@@ -187,7 +187,7 @@ namespace StarlightRiver.Items.Ultrashark
                 speedX = perturbedSpeed.X;
                 speedY = perturbedSpeed.Y;
                 position = GetSharkPos(player);
-                SpawnCasing(player, perturbedSpeed);
+                SpawnCasing(player, perturbedSpeed, position);
                 return true;
             }
             else if (player.altFunctionUse == 2) //summon stand
@@ -199,10 +199,10 @@ namespace StarlightRiver.Items.Ultrashark
                 }
                 return false;
             }
-            Vector2 perturbedSpeedAgain = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(16));
+            Vector2 perturbedSpeedAgain = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
             speedX = perturbedSpeedAgain.X;
             speedY = perturbedSpeedAgain.Y;
-            SpawnCasing(player, perturbedSpeedAgain);
+            SpawnCasing(player, perturbedSpeedAgain, position);
             return true;
         }
         #endregion
@@ -219,7 +219,7 @@ namespace StarlightRiver.Items.Ultrashark
                 {
                     if (item.turretDirection != 0) //no turn
                     {
-                        player.direction = item.turretDirection;
+                        player.direction = item.turretDirection; 
                     }
                 }
             }
@@ -244,10 +244,11 @@ namespace StarlightRiver.Items.Ultrashark
                         item.spinup = 0;
                     }
                 }
+                StarlightPlayer sPlayer = player.GetModPlayer<StarlightPlayer>();
                 #region animation and setup
                 if (item.turretDeployed)
                 {
-                    if (Main.time % 6 == 0) //animate stand
+                    if (sPlayer.Timer % 6 == 0) //animate stand
                     {
                         if (item.standFrame < item.standFrameCount - 1)
                         {
@@ -255,10 +256,10 @@ namespace StarlightRiver.Items.Ultrashark
                         }
                         else if (!item.turretSetup)
                         {
-                            item.CompleteSetup(player);
+                            item.completeSetup(player);
                         }
                     }
-                    if (Main.time % 20 - item.spinup * 6f == 0) //animate gun
+                    if (sPlayer.Timer - item.spinup * 6f == 0) //animate gun
                     {
                         if (item.sharkFrame < item.sharkFrameCount - 1)
                         {

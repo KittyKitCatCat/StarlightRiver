@@ -129,7 +129,7 @@ namespace StarlightRiver.Items.Armor.Palestone
             PlayerLayer frontLayer = new PlayerLayer("PalestoneLayer", "Armor Glowmask", frontTarget); //Instantiate a new instance of PlayerLayer to insert into the list
             layers.Insert(layers.IndexOf(layers.Last()), frontLayer); //Insert the layer at the appropriate index. 
 
-            float getTabletRotation(int currentTablet) => currentTablet / (tablets.FirstOrDefault(x => x == 0) + 1) * 6.28f + (float)Main.time % 120 / 120 * 6.28f;
+            float getTabletRotation(int currentTablet) => currentTablet / (tablets.FirstOrDefault(x => x == 0) + 1) * 6.28f + (float)player.GetModPlayer<StarlightPlayer>().Timer % 120 / 120 * 6.28f;
             Vector2 getTabletPosition(int currentTablet)
             {
                 float dist = 50;
@@ -137,7 +137,7 @@ namespace StarlightRiver.Items.Armor.Palestone
 
                 float posX = player.Center.X + (float)(Math.Cos(rot) * dist);
                 float posY = player.Center.Y + (float)(Math.Sin(rot) * dist) / 2;
-                return new Vector2(posX, posY);
+                return new Vector2(posX, posY) + Main.screenPosition;
             }
             void DrawGlowmasks(PlayerDrawInfo info, bool back)
             {

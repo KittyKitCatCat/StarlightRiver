@@ -45,7 +45,7 @@ namespace StarlightRiver.GUI
             spriteBatch.End();
             spriteBatch.Begin(default, BlendState.AlphaBlend);
 
-            spriteBatch.Draw(ModContent.GetTexture("StarlightRiver/Keys/Glow"), new Rectangle(startX - Longest * 2, startY - 25, Longest * 4, 150), Color.Black * 0.6f * (Timer / 120f));
+            spriteBatch.Draw(ModContent.GetTexture("StarlightRiver/VFX/Glow0"), new Rectangle(startX - Longest * 2, startY - 25, Longest * 4, 150), Color.Black * 0.6f * (Timer / 120f));
 
             spriteBatch.End();
             spriteBatch.Begin();
